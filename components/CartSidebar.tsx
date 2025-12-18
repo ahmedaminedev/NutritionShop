@@ -1,8 +1,7 @@
-
 import React, { useMemo } from 'react';
 import { useCart } from './CartContext';
 import { useToast } from './ToastContext';
-import { XMarkIcon, PlusIcon, MinusIcon, TrashIcon, ShoppingBagIcon } from './IconComponents';
+import { XMarkIcon, PlusIcon, MinusIcon, TrashIcon, CartIcon } from './IconComponents';
 
 export const CartSidebar: React.FC<{ isLoggedIn: boolean; onNavigateToCheckout: () => void; onNavigateToLogin: () => void; }> = ({ isLoggedIn, onNavigateToCheckout, onNavigateToLogin }) => {
     const { isCartOpen, closeCart, cartItems, cartTotal, itemCount, updateQuantity, removeFromCart } = useCart();
@@ -30,7 +29,7 @@ export const CartSidebar: React.FC<{ isLoggedIn: boolean; onNavigateToCheckout: 
                 <div className="p-8 border-b border-gray-800 flex justify-between items-center bg-brand-gray">
                     <div>
                         <h2 className="text-2xl font-serif font-black italic text-white flex items-center gap-3 uppercase">
-                            <ShoppingBagIcon className="w-6 h-6 text-brand-neon" />
+                            <CartIcon className="w-6 h-6 text-brand-neon" />
                             Votre Set <span className="text-xs font-mono text-gray-500 bg-black px-2 py-1 ml-2">{itemCount} Unités</span>
                         </h2>
                     </div>
@@ -73,7 +72,7 @@ export const CartSidebar: React.FC<{ isLoggedIn: boolean; onNavigateToCheckout: 
                     ))}
                     {cartItems.length === 0 && (
                         <div className="h-full flex flex-col items-center justify-center text-center opacity-30">
-                            <ShoppingBagIcon className="w-16 h-16 mb-4" />
+                            <CartIcon className="w-16 h-16 mb-4" />
                             <p className="text-sm font-black uppercase tracking-widest">Aucun équipement détecté</p>
                         </div>
                     )}

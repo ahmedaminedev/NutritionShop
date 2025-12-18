@@ -1,7 +1,5 @@
-
 import React from 'react';
 
-// ... (Existing Icons) ...
 export const PhoneIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -33,9 +31,10 @@ export const SearchIcon: React.FC<{ className?: string }> = ({ className }) => (
     </svg>
 );
 
+// ICÔNE NORMALE DU PANIER (CHARIOT / TROLLEY)
 export const CartIcon: React.FC<{ className?: string }> = ({ className }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.658-.463 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
     </svg>
 );
 
@@ -87,7 +86,6 @@ export const ChevronDoubleLeftIcon: React.FC<{ className?: string }> = ({ classN
     </svg>
 );
 
-// ... (Existing Trust Badges) ...
 export const DeliveryTruckIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
@@ -112,7 +110,6 @@ export const GuaranteeIcon: React.FC<{ className?: string }> = ({ className }) =
     </svg>
 );
 
-// ... (Existing Social & UI Icons) ...
 export const WhatsAppIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg fill="currentColor" className={className} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 4.315 1.731 6.086l.287.468-1.173 4.254 4.375-1.142.435.278z" />
@@ -167,7 +164,6 @@ export const MinusIcon: React.FC<{ className?: string }> = ({ className }) => (
     </svg>
 );
 
-// ... (Other icons) ...
 export const BuildingOfficeIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6h1.5m-1.5 3h1.5m-1.5 3h1.5M6.75 21v-2.25a2.25 2.25 0 012.25-2.25h3a2.25 2.25 0 012.25 2.25V21m-8.25-18h8.25a2.25 2.25 0 012.25 2.25v13.5A2.25 2.25 0 0118.75 21H5.25A2.25 2.25 0 013 18.75V5.25A2.25 2.25 0 015.25 3z" />
@@ -213,7 +209,7 @@ export const TwitterIcon: React.FC<{ className?: string }> = ({ className }) => 
 
 export const InstagramIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919C8.416 2.175 8.796 2.163 12 2.163zm0 1.802c-3.116 0-3.483.011-4.71.069-2.734.123-3.951 1.348-4.074 4.074-.058 1.226-.069 1.593-.069 4.71s.011 3.483.069 4.71c.123 2.726 1.34 3.951 4.074 4.074 1.227.058 1.594.069 4.71.069s3.483-.011 4.71-.069c2.734-.123 3.951-1.348 4.074-4.074.058-1.226.069-1.593.069-4.71s-.011-3.483-.069-4.71c-.123-2.726-1.34-3.951-4.074-4.074-1.227-.058-1.594-.069-4.71-.069zM12 6.837c-2.835 0-5.163 2.328-5.163 5.163s2.328 5.163 5.163 5.163 5.163-2.328 5.163-5.163S14.835 6.837 12 6.837zm0 8.529c-1.854 0-3.366-1.512-3.366-3.366s1.512-3.366 3.366-3.366 3.366 1.512 3.366 3.366-1.512 3.366-3.366 3.366zm5.338-9.87a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4z" />
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.593-.069 4.71s.011 3.483.069 4.71c.123 2.726 1.34 3.951 4.074 4.074 1.227.058 1.594.069 4.71.069s3.483-.011 4.71-.069c2.734-.123 3.951-1.348 4.074-4.074.058-1.226.069-1.593.069-4.71s-.011-3.483-.069-4.71c-.123-2.726-1.34-3.951-4.074-4.074-1.227-.058-1.594-.069-4.71-.069zM12 6.837c-2.835 0-5.163 2.328-5.163 5.163s2.328 5.163 5.163 5.163 5.163-2.328 5.163-5.163S14.835 6.837 12 6.837zm0 8.529c-1.854 0-3.366-1.512-3.366-3.366s1.512-3.366 3.366-3.366 3.366 1.512 3.366 3.366-1.512 3.366-3.366 3.366zm5.338-9.87a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4z" />
     </svg>
 );
 

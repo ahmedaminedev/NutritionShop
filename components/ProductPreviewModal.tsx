@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
 import type { Product } from '../types';
-import { XMarkIcon, ShoppingBagIcon, PlusIcon, MinusIcon, HeartIcon } from './IconComponents';
+import { XMarkIcon, CartIcon, PlusIcon, MinusIcon, HeartIcon } from './IconComponents';
 import { useCart } from './CartContext';
 import { useFavorites } from './FavoritesContext';
 
@@ -120,8 +119,8 @@ export const ProductPreviewModal: React.FC<ProductPreviewModalProps> = ({ produc
                                 disabled={product.quantity === 0}
                                 className="flex-1 bg-black dark:bg-white text-white dark:text-black font-bold uppercase tracking-widest text-xs py-4 rounded-full hover:bg-rose-600 dark:hover:bg-rose-500 dark:hover:text-white transition-all shadow-lg flex items-center justify-center gap-2 disabled:bg-gray-300 disabled:cursor-not-allowed"
                             >
-                                <ShoppingBagIcon className="w-4 h-4" />
-                                <span>{product.quantity === 0 ? 'Épuisé' : 'Ajouter au sac'}</span>
+                                <CartIcon className="w-4 h-4" />
+                                <span>{product.quantity === 0 ? 'Épuisé' : 'Ajouter au set'}</span>
                             </button>
                             <button onClick={() => toggleFavorite(product.id)} className={`p-4 rounded-full border transition-all ${isFav ? 'border-rose-200 bg-rose-50 text-rose-500' : 'border-gray-200 text-gray-400 hover:border-gray-400'}`}>
                                 <HeartIcon className="w-5 h-5" solid={isFav} />

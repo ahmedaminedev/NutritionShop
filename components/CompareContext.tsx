@@ -1,5 +1,4 @@
-
-import React, { createContext, useState, useContext, useCallback } from 'react';
+import React, { createContext, useState, useContext, useCallback, useEffect } from 'react';
 import type { Product } from '../types';
 import { useToast } from './ToastContext';
 
@@ -17,21 +16,43 @@ export const CompareProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const [compareList, setCompareList] = useState<Product[]>([]);
     const { addToast } = useToast();
 
+    // Persistance locale
+    useEffect(() => {
+        const stored = localStorage.getItem('ironfuel_compare');
+        if (stored) {
+            try {
+                setCompareList(JSON.parse(stored));
+            } catch (e) {
+                console.error("Error loading compare list", e);
+            }
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('ironfuel_compare', JSON.stringify(compareList));
+    }, [compareList]);
+
     const addToCompare = useCallback((product: Product) => {
         setCompareList(prev => {
+            // Déjà présent
             if (prev.find(p => p.id === product.id)) {
-                addToast("Ce produit est déjà dans le comparateur", "info");
+                addToast("Unité déjà présente dans l'analyse.", "info");
                 return prev;
             }
+            
+            // Limite de 3
             if (prev.length >= 3) {
-                addToast("Vous ne pouvez comparer que 3 produits à la fois", "error");
+                addToast("Capacité maximale de l'analyse atteinte (3 unités).", "warning");
                 return prev;
             }
+
+            // Cohérence de catégorie (Benchmarking intelligent)
             if (prev.length > 0 && prev[0].category !== product.category) {
-                addToast("Vous ne pouvez comparer que des produits de la même catégorie", "error");
+                addToast("Erreur de protocole : Comparez uniquement des produits de la même catégorie.", "error");
                 return prev;
             }
-            addToast("Produit ajouté au comparateur", "success");
+
+            addToast("Unité ajoutée au dashboard VERSUS.", "success");
             return [...prev, product];
         });
     }, [addToast]);
@@ -42,7 +63,8 @@ export const CompareProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
     const clearCompare = useCallback(() => {
         setCompareList([]);
-    }, []);
+        addToast("Dashboard Versus réinitialisé.", "info");
+    }, [addToast]);
 
     const isComparing = useCallback((productId: number) => {
         return compareList.some(p => p.id === productId);

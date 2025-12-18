@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect, useRef } from 'react';
-import { SearchIcon, UserIcon, ShoppingBagIcon, HeartIcon, ScaleIcon, ClockIcon, ArrowLeftOnRectangleIcon } from './IconComponents';
+import { SearchIcon, UserIcon, CartIcon, HeartIcon, ScaleIcon, ClockIcon, ArrowLeftOnRectangleIcon } from './IconComponents';
 import { Logo } from './Logo';
 import { ThemeToggle } from './ThemeToggle';
 import { useCart } from './CartContext';
@@ -141,7 +140,7 @@ export const Header: React.FC<HeaderProps> = ({
                         <div className="flex items-center space-x-4 md:hidden">
                             <ThemeToggle />
                             <button onClick={openCart} className="relative p-2 text-gray-800 dark:text-white hover:text-brand-neon transition-colors">
-                                <ShoppingBagIcon className="w-6 h-6" />
+                                <CartIcon className="w-6 h-6" />
                                 {itemCount > 0 && (
                                     <span className="absolute -top-1 -right-1 bg-brand-neon text-black text-[10px] font-bold rounded-none h-4 w-4 flex items-center justify-center border border-black">
                                         {itemCount}
@@ -307,7 +306,7 @@ export const Header: React.FC<HeaderProps> = ({
                         </div>
 
                         <button onClick={openCart} className="relative group p-3 text-gray-600 dark:text-gray-300 hover:text-brand-neon transition-all hover:-translate-y-0.5">
-                            <ShoppingBagIcon className="w-6 h-6" />
+                            <CartIcon className="w-6 h-6" />
                             {itemCount > 0 && (
                                 <span className="absolute top-1 right-1 bg-brand-neon text-black text-[10px] font-bold rounded-none h-4 w-4 flex items-center justify-center shadow-sm">
                                     {itemCount}

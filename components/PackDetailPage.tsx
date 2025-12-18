@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import type { Product, Pack } from '../types';
 import { Breadcrumb } from './Breadcrumb';
 import { useCart } from './CartContext';
-import { PlusIcon, MinusIcon, StarIcon, CheckCircleIcon, HeartIcon, SparklesIcon, ShoppingBagIcon } from './IconComponents';
+import { PlusIcon, MinusIcon, StarIcon, CheckCircleIcon, HeartIcon, SparklesIcon, CartIcon } from './IconComponents';
 import { ReviewsSection } from './ReviewsSection';
 import { useFavorites } from './FavoritesContext';
 
@@ -225,7 +225,7 @@ export const PackDetailPage: React.FC<PackDetailPageProps> = ({ pack, allProduct
                                 >
                                     <span className="slant-reverse block flex items-center justify-center gap-3">
                                         {isAvailable ? 'DÉPLOYER AU SET' : 'UNITÉ INDISPONIBLE'}
-                                        {isAvailable && <ShoppingBagIcon className="w-5 h-5" />}
+                                        {isAvailable && <CartIcon className="w-5 h-5" />}
                                     </span>
                                 </button>
                             </div>

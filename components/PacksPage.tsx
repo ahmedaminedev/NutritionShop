@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import type { Pack, Product, Category } from '../types';
 import { Breadcrumb } from './Breadcrumb';
-import { ShoppingBagIcon, SparklesIcon } from './IconComponents';
+import { CartIcon, SparklesIcon } from './IconComponents';
 import { useCart } from './CartContext';
 
 interface PacksPageProps {
@@ -107,7 +107,7 @@ const PackCard: React.FC<{ pack: Pack; allProducts: Product[]; onNavigateToPackD
                             disabled={!isAvailable}
                             className="w-14 h-14 bg-black dark:bg-white text-white dark:text-black flex items-center justify-center hover:bg-brand-neon hover:text-black transition-all slant disabled:opacity-30 shadow-xl"
                         >
-                            <span className="slant-reverse block"><ShoppingBagIcon className="w-6 h-6" /></span>
+                            <span className="slant-reverse block"><CartIcon className="w-6 h-6" /></span>
                         </button>
                     </div>
                 </div>
@@ -170,7 +170,7 @@ export const PacksPage: React.FC<PacksPageProps> = ({ onNavigateHome, packs, all
                 {/* Footer Section: Custom Protocol */}
                 <div className="mt-40 p-12 md:p-24 bg-white dark:bg-[#0a0a0a] border-2 border-gray-200 dark:border-gray-800 text-center relative overflow-hidden shadow-2xl rounded-none">
                     <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none text-gray-900 dark:text-white transform rotate-12 scale-150">
-                        <ShoppingBagIcon className="w-64 h-64 fill-current"/>
+                        <CartIcon className="w-64 h-64 fill-current"/>
                     </div>
                     
                     <div className="relative z-10 max-w-3xl mx-auto">

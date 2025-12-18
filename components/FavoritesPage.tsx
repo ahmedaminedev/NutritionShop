@@ -1,11 +1,10 @@
-
 import React, { useEffect, useMemo } from 'react';
 import type { Product } from '../types';
 import { useFavorites } from './FavoritesContext';
 import { useCart } from './CartContext';
 import { Breadcrumb } from './Breadcrumb';
 import { ProductCard } from './ProductCard';
-import { HeartIcon, ShoppingBagIcon, InformationCircleIcon, SparklesIcon } from './IconComponents';
+import { HeartIcon, CartIcon, InformationCircleIcon, SparklesIcon } from './IconComponents';
 
 interface FavoritesPageProps {
     onNavigateHome: () => void;
@@ -83,7 +82,7 @@ const FavoritesSummary: React.FC<{
                         className="group relative w-full bg-black dark:bg-brand-neon text-white dark:text-black font-black uppercase tracking-[0.2em] text-xs py-5 px-4 overflow-hidden transition-all hover:bg-brand-neon dark:hover:bg-white hover:text-black disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:text-gray-400 dark:disabled:text-gray-600 disabled:cursor-not-allowed shadow-xl"
                     >
                         <span className="relative z-10 flex items-center justify-center gap-3">
-                            <ShoppingBagIcon className="w-4 h-4" />
+                            <CartIcon className="w-4 h-4" />
                             DÉPLOYER LA STACK
                         </span>
                     </button>
