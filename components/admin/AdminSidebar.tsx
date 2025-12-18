@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Logo } from '../Logo';
 import { ChartPieIcon, ShoppingBagIcon, TagIcon, CubeIcon, UsersIcon, InboxIcon, HomeIcon, ArrowLongLeftIcon, SparklesIcon, StorefrontIcon } from '../IconComponents';
@@ -13,7 +12,6 @@ interface AdminSidebarProps {
     onLogout: () => void;
 }
 
-// Chat Icon
 const ChatBubbleLeftRightIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-2.281m-5.518 5.518a2.126 2.126 0 00-2.282-.476 2.125 2.125 0 00-1.53 2.105v4.286c0 1.136.847 2.1 1.98 2.193.34.027.68.052 1.02.072M6.825 19.475l-3 3V19.38c-.34-.02-.68-.045-1.02-.072a2.125 2.125 0 01-1.98-2.193V9.38c0-1.136.847-2.1 1.98-2.193 1.354-.109 2.694-.163 4.02-.163 1.98 0 3.9.115 5.685.345" />
@@ -44,8 +42,6 @@ const NavItem: React.FC<{
             <span className={`relative z-10 ml-4 font-bold uppercase tracking-wider text-[10px] ${isActive ? 'skew-x-[12deg]' : ''}`}>
                 {label}
             </span>
-            
-            {/* Hover Glint Effect */}
             {!isActive && (
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-200/50 dark:via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500"></div>
             )}
@@ -53,7 +49,6 @@ const NavItem: React.FC<{
     </li>
 );
 
-// Icons...
 const ArrowLeftOnRectangleIcon = ({ className }: { className?: string }) => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
@@ -101,9 +96,6 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ activePage, setActiv
 
     return (
         <aside className="w-64 bg-white dark:bg-[#050505] border-r border-gray-300 dark:border-gray-800 flex flex-col flex-shrink-0 z-50 relative overflow-hidden transition-colors duration-300">
-            {/* Background Texture (Dark only) */}
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-0 dark:opacity-10 pointer-events-none"></div>
-
             <div className="h-24 flex items-center justify-center border-b border-gray-300 dark:border-gray-800 bg-white dark:bg-[#050505] relative z-10 transition-colors">
                 <Logo />
             </div>
@@ -118,7 +110,8 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ activePage, setActiv
                 </div>
             </div>
 
-            <nav className="flex-1 px-2 overflow-y-auto no-scrollbar relative z-10">
+            {/* --- SCROLLABLE AREA --- */}
+            <nav className="flex-1 px-2 overflow-y-auto custom-scrollbar relative z-10">
                 <ul className="space-y-2">
                     {navItems.map(item => (
                         <NavItem

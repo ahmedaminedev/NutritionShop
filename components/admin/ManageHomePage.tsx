@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 import type { Advertisements, Product, Pack, Category } from '../../types';
 import { useToast } from '../ToastContext';
@@ -71,7 +70,7 @@ export const ManageHomePage: React.FC<ManageHomePageProps> = ({ initialAds, onSa
             await api.updateAdvertisements(adsConfig);
             onSave(adsConfig);
             setIsDirty(false);
-            addToast("Modifications enregistrées avec succès dans la base de données !", "success");
+            addToast("Déploiement Front-Office réussi !", "success");
         } catch (error) {
             console.error(error);
             addToast("Erreur lors de la sauvegarde.", "error");
@@ -126,11 +125,9 @@ export const ManageHomePage: React.FC<ManageHomePageProps> = ({ initialAds, onSa
         return (
             <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 bg-white dark:bg-[#050505] min-h-screen transition-colors duration-300">
                 {renderSection('hero', 'Carrousel Principal', <HeroSection slides={adsConfig.heroSlides} />, interactive)}
-                
                 <div className="my-8">
                     {renderSection('trustBadges', 'Badges de Confiance', <TrustBadges badges={adsConfig.trustBadges} />, interactive)}
                 </div>
-
                 <div className="my-12">
                     {renderSection('newArrivals', 'Carrousel Nouveautés', (
                         <ProductCarousel 
@@ -141,40 +138,23 @@ export const ManageHomePage: React.FC<ManageHomePageProps> = ({ initialAds, onSa
                         />
                     ), interactive)}
                 </div>
-
                 {renderSection('audioPromo', 'Bannière Audio', <AudioPromoBanner ads={adsConfig.audioPromo} />, interactive)}
-
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-12">
                     {renderSection('promoBanner1', 'Bannière Gauche', <MediumPromoBanner banner={adsConfig.promoBanners[0]} isPreview allProducts={allProducts} allPacks={allPacks} onPreview={() => {}} />, interactive)}
                     {renderSection('promoBanner2', 'Bannière Droite', <MediumPromoBanner banner={adsConfig.promoBanners[1]} isPreview allProducts={allProducts} allPacks={allPacks} onPreview={() => {}} />, interactive)}
                 </div>
-
                 {renderSection('shoppableVideos', 'Vidéos Shopping', <ShoppableVideoCarousel videos={adsConfig.shoppableVideos || []} isPreview />, interactive)}
-
                 {renderSection('editorialCollage', 'Collage Éditorial', <EditorialMasonry items={adsConfig.editorialCollage || []} isPreview />, interactive)}
-
                 <div className="my-12">
                     {renderSection('summerSelection', 'Carrousel Été', (
-                        <ProductCarousel 
-                            title={adsConfig.summerSelection?.title || "Sélection d'été"} 
-                            products={summerSelectionProducts} 
-                            onPreview={() => {}} 
-                            onNavigateToProductDetail={() => {}} 
-                        />
+                        <ProductCarousel title={adsConfig.summerSelection?.title || "Sélection d'été"} products={summerSelectionProducts} onPreview={() => {}} onNavigateToProductDetail={() => {}} />
                     ), interactive)}
                 </div>
-
                 <div className="my-16">
                     {renderSection('virtualTryOn', 'Bloc Interactif', <VirtualTryOnSection config={adsConfig.virtualTryOn} />, interactive)}
                 </div>
-
                 {renderSection('featuredGrid', 'Grille Produits', (
-                    <ProductGridSection 
-                        allProducts={allProducts} 
-                        onPreview={() => {}} 
-                        onNavigateToProductDetail={() => {}} 
-                        config={adsConfig.featuredGrid}
-                    />
+                    <ProductGridSection allProducts={allProducts} onPreview={() => {}} onNavigateToProductDetail={() => {}} config={adsConfig.featuredGrid}/>
                 ), interactive)}
             </div>
         );
@@ -182,7 +162,6 @@ export const ManageHomePage: React.FC<ManageHomePageProps> = ({ initialAds, onSa
 
     return (
         <div className="flex flex-col h-full w-full bg-gray-100 dark:bg-[#050505] relative text-gray-900 dark:text-white transition-colors duration-300">
-            {/* Top Bar */}
             <div className="bg-white dark:bg-[#050505] border-b border-gray-200 dark:border-gray-800 p-4 flex justify-between items-center shadow-md z-20 flex-shrink-0 transition-colors">
                 <div>
                     <h1 className="text-xl font-black text-gray-900 dark:text-white italic uppercase tracking-wider flex items-center gap-2">
@@ -191,63 +170,24 @@ export const ManageHomePage: React.FC<ManageHomePageProps> = ({ initialAds, onSa
                     </h1>
                 </div>
                 <div className="flex items-center gap-3">
-                    <button 
-                        onClick={() => setIsFullScreen(true)}
-                        className="p-2 text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-sm transition-colors border border-gray-200 dark:border-gray-700"
-                        title="Aperçu Plein Écran"
-                    >
-                        <ArrowsPointingOutIcon className="w-5 h-5" />
-                    </button>
-                    <button 
-                        onClick={handleSaveClick} 
-                        disabled={!isDirty}
-                        className={`px-6 py-2 font-bold text-xs uppercase tracking-widest transition-all shadow-md flex items-center gap-2 ${
-                            isDirty 
-                            ? 'bg-black dark:bg-brand-neon text-white dark:text-black hover:bg-gray-800 dark:hover:bg-white skew-x-[-12deg]' 
-                            : 'bg-gray-200 dark:bg-gray-800 text-gray-500 cursor-not-allowed skew-x-[-12deg]'
-                        }`}
-                    >
-                        <span className="skew-x-[12deg]">{isDirty ? 'Enregistrer' : 'Sauvegardé'}</span>
-                    </button>
+                    <button onClick={() => setIsFullScreen(true)} className="p-2 text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-sm transition-colors border border-gray-200 dark:border-gray-700" title="Aperçu Plein Écran"><ArrowsPointingOutIcon className="w-5 h-5" /></button>
+                    <button onClick={handleSaveClick} disabled={!isDirty} className={`px-6 py-2 font-bold text-xs uppercase tracking-widest transition-all shadow-md flex items-center gap-2 ${isDirty ? 'bg-black dark:bg-brand-neon text-white dark:text-black hover:bg-gray-800 dark:hover:bg-white skew-x-[-12deg]' : 'bg-gray-200 dark:bg-gray-800 text-gray-500 cursor-not-allowed skew-x-[-12deg]'}`}><span className="skew-x-[12deg]">{isDirty ? 'DÉPLOYER' : 'SAUVEGARDÉ'}</span></button>
                 </div>
             </div>
-
             <div className="flex flex-1 overflow-hidden">
-                {/* Left: Live Preview */}
                 <div className="flex-1 overflow-y-auto custom-scrollbar bg-gray-50 dark:bg-black">
                     <div className="bg-white dark:bg-[#050505] min-h-full pointer-events-auto">
                         {renderPreviewContent(true)}
                     </div>
                 </div>
-
-                {/* Right: Editor Panel */}
                 <div className="w-[380px] bg-white dark:bg-[#111] border-l border-gray-200 dark:border-gray-800 shadow-xl z-10 flex flex-col flex-shrink-0 transition-colors">
-                    <EditorPanel 
-                        section={activeSection}
-                        data={getCurrentSectionData()}
-                        onChange={(data) => handleUpdateConfig(activeSection, data)}
-                        allProducts={allProducts}
-                        allCategories={allCategories}
-                        allPacks={allPacks}
-                    />
+                    <EditorPanel section={activeSection} data={getCurrentSectionData()} onChange={(data) => handleUpdateConfig(activeSection, data)} allProducts={allProducts} allCategories={allCategories} allPacks={allPacks} />
                 </div>
             </div>
-
-            {/* Fullscreen Overlay */}
             {isFullScreen && (
                 <div className="fixed inset-0 z-[9999] bg-white dark:bg-black overflow-y-auto animate-fadeIn">
-                    <div className="fixed top-6 right-6 z-[10000]">
-                        <button 
-                            onClick={() => setIsFullScreen(false)}
-                            className="flex items-center gap-2 bg-black dark:bg-brand-neon text-white dark:text-black px-5 py-3 rounded-full shadow-2xl font-bold uppercase tracking-wider hover:bg-gray-800 dark:hover:bg-white transition-colors"
-                        >
-                            <XMarkIcon className="w-5 h-5" />
-                            <span>Fermer</span>
-                        </button>
-                    </div>
-                    <div className="w-full">
-                        {renderPreviewContent(false)}
-                    </div>
+                    <div className="fixed top-6 right-6 z-[10000]"><button onClick={() => setIsFullScreen(false)} className="flex items-center gap-2 bg-black dark:bg-brand-neon text-white dark:text-black px-5 py-3 rounded-full shadow-2xl font-bold uppercase tracking-wider hover:bg-gray-800 dark:hover:bg-white transition-colors"><XMarkIcon className="w-5 h-5" /><span>Fermer</span></button></div>
+                    <div className="w-full">{renderPreviewContent(false)}</div>
                 </div>
             )}
         </div>
