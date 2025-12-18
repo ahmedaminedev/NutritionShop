@@ -95,7 +95,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ activePage, setActiv
     ];
 
     return (
-        <aside className="w-64 bg-white dark:bg-[#050505] border-r border-gray-300 dark:border-gray-800 flex flex-col flex-shrink-0 z-50 relative overflow-hidden transition-colors duration-300">
+        <aside className="w-64 bg-white dark:bg-[#050505] border-r border-gray-300 dark:border-gray-800 flex flex-col flex-shrink-0 h-full z-50 relative overflow-hidden transition-colors duration-300">
             <div className="h-24 flex items-center justify-center border-b border-gray-300 dark:border-gray-800 bg-white dark:bg-[#050505] relative z-10 transition-colors">
                 <Logo />
             </div>
@@ -111,7 +111,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ activePage, setActiv
             </div>
 
             {/* --- SCROLLABLE AREA --- */}
-            <nav className="flex-1 px-2 overflow-y-auto custom-scrollbar relative z-10">
+            <nav className="flex-1 px-2 overflow-y-auto custom-scrollbar relative z-10 pb-10">
                 <ul className="space-y-2">
                     {navItems.map(item => (
                         <NavItem
@@ -125,7 +125,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ activePage, setActiv
                 </ul>
             </nav>
 
-            <div className="p-4 border-t border-gray-300 dark:border-gray-800 bg-gray-50 dark:bg-[#080808] relative z-10 space-y-3 transition-colors">
+            <div className="p-4 border-t border-gray-300 dark:border-gray-800 bg-gray-50 dark:bg-[#080808] relative z-10 space-y-3 transition-colors flex-shrink-0">
                  <a
                     href="#"
                     onClick={(e) => { e.preventDefault(); handleLogoutClick(); }}
@@ -154,6 +154,12 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ activePage, setActiv
                 confirmText="Oui, déconnecter"
                 onConfirm={confirmLogout}
             />
+
+            <style>{`
+                .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+                .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+                .custom-scrollbar::-webkit-scrollbar-thumb { background: #ccff00; border-radius: 10px; }
+            `}</style>
         </aside>
     );
 };

@@ -1,118 +1,165 @@
-import React, { useMemo } from 'react';
-import type { Order, Product, ContactMessage } from '../../types';
-import { 
-    ShoppingBagIcon, 
-    CreditCardIcon, 
-    InboxIcon, 
-    ArrowUpRightIcon, 
-    ArrowDownRightIcon,
-    ChartPieIcon
-} from '../IconComponents';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import React, { useState } from 'react';
+import { Logo } from '../Logo';
+import { ChartPieIcon, ShoppingBagIcon, TagIcon, CubeIcon, UsersIcon, InboxIcon, HomeIcon, ArrowLongLeftIcon, SparklesIcon, StorefrontIcon } from '../IconComponents';
+import type { AdminPageName } from './AdminPage';
+import { CustomAlert } from '../CustomAlert';
+import { ThemeToggle } from '../ThemeToggle';
 
-interface DashboardProps {
-    orders: Order[];
-    products: Product[];
-    messages: ContactMessage[];
+interface AdminSidebarProps {
+    activePage: AdminPageName;
+    setActivePage: (page: AdminPageName) => void;
+    onNavigateHome: () => void;
+    onLogout: () => void;
 }
 
-const KPICard: React.FC<{ title: string; value: string; trend?: number; icon: React.ReactNode; color: string }> = ({ title, value, trend, icon, color }) => (
-    <div className={`bg-white dark:bg-brand-gray border border-gray-200 dark:border-gray-800 p-6 relative overflow-hidden group hover:border-${color} transition-all duration-500 shadow-sm dark:shadow-none`}>
-        <div className={`absolute top-0 right-0 w-24 h-24 -mr-8 -mt-8 opacity-5 group-hover:opacity-10 transition-opacity text-brand-neon`}>{icon}</div>
-        <div className={`w-1 h-8 bg-brand-neon absolute left-0 top-1/2 -translate-y-1/2`}></div>
-        <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">{title}</p>
-        <div className="flex items-end gap-3">
-            <h3 className="text-3xl font-black text-gray-900 dark:text-white font-mono tracking-tighter">{value}</h3>
-            {trend !== undefined && (
-                <div className={`flex items-center text-[10px] font-bold ${trend >= 0 ? 'text-green-500' : 'text-brand-alert'} mb-1`}>
-                    {trend >= 0 ? <ArrowUpRightIcon className="w-3 h-3" /> : <ArrowDownRightIcon className="w-3 h-3" />}
-                    {Math.abs(trend)}%
-                </div>
-            )}
-        </div>
-    </div>
+const ChatBubbleLeftRightIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-2.281m-5.518 5.518a2.126 2.126 0 00-2.282-.476 2.125 2.125 0 00-1.53 2.105v4.286c0 1.136.847 2.1 1.98 2.193.34.027.68.052 1.02.072M6.825 19.475l-3 3V19.38c-.34-.02-.68-.045-1.02-.072a2.125 2.125 0 01-1.98-2.193V9.38c0-1.136.847-2.1 1.98-2.193 1.354-.109 2.694-.163 4.02-.163 1.98 0 3.9.115 5.685.345" />
+    </svg>
 );
 
-export const DashboardHomePage: React.FC<DashboardProps> = ({ orders, products, messages }) => {
-    const revenue = useMemo(() => orders.filter(o => o.status !== 'Annulée').reduce((sum, o) => sum + o.total, 0), [orders]);
-    
-    const stats = [
-        { title: 'Chiffre d\'Affaires', value: `${revenue.toFixed(0)} DT`, trend: 12, icon: <CreditCardIcon />, color: 'brand-neon' },
-        { title: 'Commandes Total', value: orders.length.toString(), trend: 5, icon: <ShoppingBagIcon />, color: 'blue-500' },
-        { title: 'Stock Critique', value: products.filter(p => p.quantity < 5).length.toString(), trend: -8, icon: <ChartPieIcon />, color: 'brand-neon' },
-        { title: 'Transmissions', value: messages.filter(m => !m.read).length.toString(), trend: 0, icon: <InboxIcon />, color: 'brand-neon' }
+const NavItem: React.FC<{
+    icon: React.ReactNode;
+    label: string;
+    isActive: boolean;
+    onClick: () => void;
+}> = ({ icon, label, isActive, onClick }) => (
+    <li>
+        <a
+            href="#"
+            onClick={(e) => { e.preventDefault(); onClick(); }}
+            className={`
+                group relative flex items-center px-4 py-3 my-1 transition-all duration-300 overflow-hidden
+                ${isActive 
+                    ? 'text-white dark:text-black bg-black dark:bg-brand-neon skew-x-[-12deg] translate-x-2 border-r-4 border-gray-400 dark:border-white shadow-md' 
+                    : 'text-gray-600 dark:text-gray-500 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5'
+                }
+            `}
+        >
+            <span className={`relative z-10 w-5 h-5 transition-transform duration-300 ${isActive ? 'skew-x-[12deg]' : 'group-hover:scale-110'}`}>
+                {icon}
+            </span>
+            <span className={`relative z-10 ml-4 font-bold uppercase tracking-wider text-[10px] ${isActive ? 'skew-x-[12deg]' : ''}`}>
+                {label}
+            </span>
+            {!isActive && (
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-200/50 dark:via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500"></div>
+            )}
+        </a>
+    </li>
+);
+
+const ArrowLeftOnRectangleIcon = ({ className }: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+    </svg>
+);
+
+const TagIconSolid = ({ className }: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
+        <path fillRule="evenodd" d="M5.25 2.25a3 3 0 00-3 3v4.318a3 3 0 00.879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 005.441-5.44c.766-1.16.346-2.632-.575-3.553l-9.58-9.581a3 3 0 00-2.122-.879H5.25zM6.375 7.5a1.125 1.125 0 100-2.25 1.125 1.125 0 000 2.25z" clipRule="evenodd" />
+    </svg>
+);
+
+const StarIconSolid = ({ className }: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clipRule="evenodd" />
+    </svg>
+);
+
+export const AdminSidebar: React.FC<AdminSidebarProps> = ({ activePage, setActivePage, onNavigateHome, onLogout }) => {
+    const [isLogoutAlertOpen, setIsLogoutAlertOpen] = useState(false);
+
+    const handleLogoutClick = () => {
+        setIsLogoutAlertOpen(true);
+    };
+
+    const confirmLogout = () => {
+        setIsLogoutAlertOpen(false);
+        onLogout();
+    };
+
+    const navItems: { id: AdminPageName, label: string, icon: React.ReactNode }[] = [
+        { id: 'dashboard', label: 'Command Center', icon: <ChartPieIcon /> },
+        { id: 'chat', label: 'Live Ops', icon: <ChatBubbleLeftRightIcon /> },
+        { id: 'home', label: 'Front Office', icon: <HomeIcon /> },
+        { id: 'offers', label: 'Offres & Deals', icon: <TagIconSolid /> },
+        { id: 'products', label: 'Armurerie', icon: <ShoppingBagIcon /> }, 
+        { id: 'categories', label: 'Catégories', icon: <TagIcon /> },
+        { id: 'brands', label: 'Marques', icon: <StarIconSolid className="w-6 h-6"/> },
+        { id: 'packs', label: 'Packs Elite', icon: <CubeIcon /> },
+        { id: 'orders', label: 'Logistique', icon: <UsersIcon /> },
+        { id: 'messages', label: 'Transmissions', icon: <InboxIcon /> },
+        { id: 'promotions', label: 'Codes Promo', icon: <SparklesIcon /> },
+        { id: 'stores', label: 'Bases / Magasins', icon: <StorefrontIcon /> },
     ];
 
     return (
-        <div className="space-y-8 animate-fadeIn p-8 bg-gray-50 dark:bg-[#050505] min-h-screen transition-colors duration-300">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-gray-200 dark:border-gray-800 pb-8 gap-4">
-                <div>
-                    <h1 className="text-4xl font-black text-gray-900 dark:text-white uppercase italic tracking-tighter flex items-center gap-4">
-                        <span className="w-2 h-10 bg-brand-neon slant"></span>
-                        Mission Control
-                    </h1>
-                    <p className="text-gray-500 dark:text-gray-400 font-mono text-xs uppercase tracking-[0.3em] mt-2">Surveillance des opérations tactiques</p>
+        <aside className="w-64 bg-white dark:bg-[#050505] border-r border-gray-300 dark:border-gray-800 flex flex-col flex-shrink-0 h-full z-50 relative overflow-hidden transition-colors duration-300">
+            <div className="h-24 flex items-center justify-center border-b border-gray-300 dark:border-gray-800 bg-white dark:bg-[#050505] relative z-10 transition-colors">
+                <Logo />
+            </div>
+            
+            <div className="px-4 py-6 relative z-10 flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-green-600 dark:bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_#22c55e]"></div>
+                    <p className="text-[10px] font-black text-gray-700 dark:text-gray-400 uppercase tracking-[0.25em]">Système Actif</p>
                 </div>
-                <div className="flex items-center gap-3 bg-white dark:bg-brand-gray px-4 py-2 border border-gray-200 dark:border-gray-800">
-                    <span className="w-2 h-2 bg-brand-neon rounded-full animate-pulse shadow-[0_0_10px_#ccff00]"></span>
-                    <span className="text-[10px] font-black text-gray-700 dark:text-white uppercase tracking-widest">Système Opérationnel</span>
+                <div className="scale-75 origin-right">
+                    <ThemeToggle />
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {stats.map((s, i) => (
-                    <KPICard key={i} {...s} />
-                ))}
+            {/* --- SCROLLABLE AREA --- */}
+            <nav className="flex-1 px-2 overflow-y-auto custom-scrollbar relative z-10 pb-10">
+                <ul className="space-y-2">
+                    {navItems.map(item => (
+                        <NavItem
+                            key={item.id}
+                            icon={item.icon}
+                            label={item.label}
+                            isActive={activePage === item.id}
+                            onClick={() => setActivePage(item.id)}
+                        />
+                    ))}
+                </ul>
+            </nav>
+
+            <div className="p-4 border-t border-gray-300 dark:border-gray-800 bg-gray-50 dark:bg-[#080808] relative z-10 space-y-3 transition-colors flex-shrink-0">
+                 <a
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); handleLogoutClick(); }}
+                    className="flex items-center justify-center p-3 text-red-600 border border-red-200 dark:border-red-900/30 hover:bg-red-600 hover:text-white transition-all font-bold text-xs uppercase tracking-widest skew-x-[-10deg]"
+                >
+                    <ArrowLeftOnRectangleIcon className="w-4 h-4 mr-2 skew-x-[10deg]" />
+                    <span className="skew-x-[10deg]">Déconnexion</span>
+                </a>
+                 <a
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); onNavigateHome(); }}
+                    className="flex items-center justify-center p-3 text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-800 hover:bg-black dark:hover:border-brand-neon hover:text-white dark:hover:text-brand-neon dark:hover:bg-transparent transition-all font-bold text-xs uppercase tracking-widest skew-x-[-10deg]"
+                >
+                    <ArrowLongLeftIcon className="w-4 h-4 mr-2 skew-x-[10deg]" />
+                    <span className="skew-x-[10deg]">Retour Site</span>
+                </a>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div className="lg:col-span-2 bg-white dark:bg-brand-gray border border-gray-200 dark:border-gray-800 p-8 relative overflow-hidden shadow-sm dark:shadow-none">
-                    <div className="flex justify-between items-center mb-8">
-                        <h3 className="text-sm font-black text-gray-800 dark:text-white uppercase italic tracking-widest flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 bg-brand-neon"></div>
-                            Analyse de performance (30 jours)
-                        </h3>
-                    </div>
-                    <div className="h-[350px] w-full">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <AreaChart data={[{day:'01', val:20}, {day:'05', val:45}, {day:'10', val:30}, {day:'15', val:80}, {day:'20', val:65}, {day:'25', val:95}, {day:'30', val:110}]}>
-                                <defs>
-                                    <linearGradient id="colorVal" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#ccff00" stopOpacity={0.3}/>
-                                        <stop offset="95%" stopColor="#ccff00" stopOpacity={0}/>
-                                    </linearGradient>
-                                </defs>
-                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" className="dark:stroke-gray-800" />
-                                <XAxis dataKey="day" stroke="#999" fontSize={10} fontStyle="italic" />
-                                <YAxis hide />
-                                <Tooltip contentStyle={{backgroundColor:'#000', border:'1px solid #ccff00', color:'#fff'}} />
-                                <Area type="monotone" dataKey="val" stroke="#ccff00" strokeWidth={3} fillOpacity={1} fill="url(#colorVal)" />
-                            </AreaChart>
-                        </ResponsiveContainer>
-                    </div>
-                </div>
+            <CustomAlert 
+                isOpen={isLogoutAlertOpen}
+                onClose={() => setIsLogoutAlertOpen(false)}
+                title="Déconnexion"
+                message="Voulez-vous vraiment quitter le centre de commande ?"
+                type="warning"
+                showCancelButton={true}
+                confirmText="Oui, déconnecter"
+                onConfirm={confirmLogout}
+            />
 
-                <div className="bg-white dark:bg-brand-gray border border-gray-200 dark:border-gray-800 p-8 shadow-sm dark:shadow-none">
-                    <h3 className="text-sm font-black text-gray-800 dark:text-white uppercase italic tracking-widest mb-6 flex items-center gap-2">
-                         <div className="w-1.5 h-1.5 bg-brand-alert"></div>
-                         Unités Critiques
-                    </h3>
-                    <div className="space-y-4 max-h-[350px] overflow-y-auto custom-scrollbar pr-2">
-                        {products.filter(p => p.quantity < 10).map(p => (
-                            <div key={p.id} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-black border border-gray-100 dark:border-gray-800 group hover:border-brand-neon transition-colors">
-                                <div className="min-w-0 flex-1">
-                                    <p className="text-[10px] font-bold text-gray-500 truncate uppercase">{p.name}</p>
-                                    <p className="text-[9px] text-gray-400 font-mono">{p.brand}</p>
-                                </div>
-                                <div className="text-right ml-4">
-                                    <p className={`text-xs font-black ${p.quantity === 0 ? 'text-brand-alert' : 'text-gray-900 dark:text-white'}`}>{p.quantity} UN</p>
-                                    <p className="text-[8px] text-gray-400 uppercase font-bold">Stock</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </div>
+            <style>{`
+                .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+                .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+                .custom-scrollbar::-webkit-scrollbar-thumb { background: #ccff00; border-radius: 10px; }
+            `}</style>
+        </aside>
     );
 };
